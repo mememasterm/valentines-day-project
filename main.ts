@@ -1,3 +1,246 @@
+namespace SpriteKind {
+    export const med = SpriteKind.create()
+    export const moneyyyy = SpriteKind.create()
+    export const cropsss = SpriteKind.create()
+    export const ladder = SpriteKind.create()
+}
+function medications () {
+    meds = sprites.create(img`
+        . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . 
+        f f f f f f f f f f f f f f f f f 
+        f 1 1 1 1 2 2 2 2 2 2 2 1 1 1 1 f 
+        f 1 1 1 1 2 2 2 2 2 2 2 1 1 1 1 f 
+        f 1 1 1 1 2 2 2 1 2 2 2 1 1 1 1 f 
+        f 1 1 1 1 2 2 2 1 2 2 2 1 1 1 1 f 
+        f 1 1 1 1 2 1 1 1 1 1 2 1 1 1 1 f 
+        f 1 1 1 1 2 2 2 1 2 2 2 1 1 1 1 f 
+        f 1 1 1 1 2 2 2 1 2 2 2 1 1 1 1 f 
+        f 1 1 1 1 2 2 2 2 2 2 2 1 1 1 1 f 
+        f 1 1 1 1 2 2 2 2 2 2 2 1 1 1 1 f 
+        f f f f f f f f f f f f f f f f f 
+        . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . 
+        `, SpriteKind.med)
+    meds.setScale(1, ScaleAnchor.Middle)
+    tiles.placeOnRandomTile(meds, assets.tile`myTile52`)
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.ladder, function (sprite, otherSprite) {
+    if (controller.A.isPressed()) {
+        mySprite.vy += -5
+    }
+})
+function inflation () {
+    game.splash("INFLATION has gone rampant in the city!", "ECONOMY IMPACTED!")
+    cash += randint(-1, -3)
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.med, function (sprite, otherSprite) {
+    Meds += 1
+    sprites.destroy(otherSprite)
+    item_spawn()
+})
+function ladder4 () {
+	
+}
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (mySprite.vy == 0) {
+        mySprite.vy += -150
+    }
+})
+function item_spawn () {
+    list = [
+    meds,
+    crops,
+    liquid,
+    cash2
+    ]
+    if (list._pickRandom() == meds) {
+        medications()
+    } else if (list._pickRandom() == crops) {
+        farm()
+    } else if (list._pickRandom() == liquid) {
+        water()
+    } else if (list._pickRandom() == cash2) {
+        money()
+    }
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.moneyyyy, function (sprite, otherSprite) {
+    cash += 1
+    sprites.destroy(otherSprite)
+    item_spawn()
+})
+function Initial_amounts () {
+    Meds = 5
+    cash = 5
+    crops2 = 5
+    liquid2 = 5
+}
+function call_main_character () {
+    for (let value of tiles.getTilesByType(sprites.builtin.forestTiles20)) {
+        mySprite = sprites.create(img`
+            ........................
+            .....ffff...............
+            ...fff22fff.............
+            ..fff2222fff............
+            .fffeeeeeefff...........
+            .ffe222222eef...........
+            .fe2ffffff2ef...........
+            .ffffeeeeffff...........
+            ffefbf44fbfeff..........
+            fee41fddf14eef..........
+            .ffffdddddeef...........
+            fddddf444eef............
+            fbbbbf2222f4e...........
+            fbbbbf2222fd4...........
+            .fccf45544f44...........
+            ..ffffffff..............
+            ....ff..ff..............
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            `, SpriteKind.Player)
+        tiles.placeOnRandomTile(mySprite, sprites.builtin.forestTiles20)
+        controller.moveSprite(mySprite, 100, 0)
+        scene.cameraFollowSprite(mySprite)
+        mySprite.ay = 200
+    }
+}
+function ladder3 () {
+    for (let value of tiles.getTilesByType(assets.tile`myTile61`)) {
+        ladder2 = sprites.create(img`
+            . . d d d d d d d d d d d . . 
+            . . d d d d d d d d d d d . . 
+            . . d . . . . . . . . . d . . 
+            . . d . . . . . . . . . d . . 
+            . . d d d d d d d d d d d . . 
+            . . d d d d d d d d d d d . . 
+            . . d . . . . . . . . . d . . 
+            . . d . . . . . . . . . d . . 
+            . . d d d d d d d d d d d . . 
+            . . d d d d d d d d d d d . . 
+            . . d . . . . . . . . . d . . 
+            . . d . . . . . . . . . d . . 
+            . . d d d d d d d d d d d . . 
+            . . d d d d d d d d d d d . . 
+            . . d . . . . . . . . . d . . 
+            . . d . . . . . . . . . d . . 
+            `, SpriteKind.ladder)
+        tiles.placeOnTile(ladder2, value)
+    }
+}
+function virus () {
+    game.splash("A VIRUS has spread throughout the city!", "POPULATION HEALTH IMPACTED!")
+    Meds += randint(-1, -3)
+}
+function cropFailure () {
+    game.splash("A FAMINE has begun in the city!", "CITY FOOD SUPPLY IMPACTED!")
+    crops2 += randint(-1, -3)
+}
+function drought () {
+    game.splash("There is a DROUGHT in the city!", "CITY WATER SUPPLY IMPACTED")
+    liquid2 += randint(-1, -3)
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.cropsss, function (sprite, otherSprite) {
+    crops2 += 1
+    sprites.destroy(otherSprite)
+    item_spawn()
+})
+function water () {
+    liquid = sprites.create(img`
+        ....................
+        ....................
+        ....................
+        ....................
+        ....................
+        .....ffffffffff.....
+        ....f1811111111f....
+        ....f1111111111f....
+        .....f66666666f.....
+        .....f99999999f.....
+        ....f9999999999f....
+        ....f9999999999f....
+        ....f9999999999f....
+        ....f9999999999f....
+        ....f9999999999f....
+        ....f9999999999f....
+        ....f9999999999f....
+        .....f11111111f.....
+        ......ffffffff......
+        ....................
+        `, SpriteKind.Food)
+    liquid.setScale(1, ScaleAnchor.Middle)
+    tiles.placeOnRandomTile(meds, assets.tile`myTile52`)
+}
+function money () {
+    cash2 = sprites.create(img`
+        ......7..7......
+        ......7..7......
+        .....77777777...
+        ....7.7..7......
+        ...7..7..7......
+        ..7...7..7......
+        ..7...7..7......
+        ...7..7..7......
+        ....7.7..7......
+        .....777777.....
+        ......7..7.7....
+        ......7..7..7...
+        ......7..7...7..
+        ......7..7...7..
+        ......7..7..7...
+        ......7..7.7....
+        ...77777777.....
+        ......7..7......
+        ......7..7......
+        `, SpriteKind.moneyyyy)
+    cash2.setScale(1, ScaleAnchor.Middle)
+    tiles.placeOnRandomTile(cash2, assets.tile`myTile52`)
+}
+function farm () {
+    crops = sprites.create(img`
+        . . . . . . . . . . . . . . 5 5 
+        . . . . . 7 7 . . . . . 5 5 5 5 
+        . . . . 7 7 . . . . . 5 5 5 5 . 
+        . . . 7 7 . . . . 5 5 5 5 5 5 . 
+        . . 7 7 . . . . 5 5 5 5 5 5 . . 
+        . 7 7 . . . . 5 5 5 5 5 5 . . . 
+        . 7 . . . 5 5 5 5 5 5 5 5 . . . 
+        . 7 . . 5 5 5 5 5 5 5 5 . . . . 
+        . 7 . 5 5 5 5 5 5 5 5 . . . . . 
+        . 7 5 5 5 5 5 5 5 5 . . . . . . 
+        . 7 5 5 5 5 5 5 5 5 . . . 7 7 . 
+        . 7 5 5 5 5 5 5 5 . . . 7 7 . . 
+        7 7 5 5 5 5 5 5 . . . 7 7 . . . 
+        7 7 5 5 5 5 5 . . . 7 7 . . . . 
+        7 7 7 7 7 7 7 7 7 7 7 . . . . . 
+        7 7 7 7 . . . . . . . . . . . . 
+        `, SpriteKind.cropsss)
+    crops.setScale(1, ScaleAnchor.Middle)
+    tiles.placeOnRandomTile(crops, assets.tile`myTile52`)
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    liquid2 += 1
+    sprites.destroy(otherSprite)
+    item_spawn()
+})
+let disasters: number[] = []
+let ladder2: Sprite = null
+let liquid2 = 0
+let crops2 = 0
+let cash2: Sprite = null
+let liquid: Sprite = null
+let crops: Sprite = null
+let list: Sprite[] = []
+let Meds = 0
+let cash = 0
+let mySprite: Sprite = null
+let meds: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -121,32 +364,14 @@ scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     `)
 tiles.setCurrentTilemap(tilemap`level2`)
-let mySprite = sprites.create(img`
-    ........................
-    ........................
-    .......ff...............
-    .....ff22ff.............
-    ...fff2222fff...........
-    ..fff222222fff..........
-    ..fff222222fff..........
-    ..feeeeeeeeeeff.........
-    .ffe22222222eff.........
-    .fffffeeeefffff.........
-    fdfefbf44fbfeff.........
-    fbfe41fddf14ef..........
-    fbffe4dddd4efe..........
-    fcfef22222f4e...........
-    .ff4f44554f4e...........
-    ....ffffffdde...........
-    .....ffffedde...........
-    ..........ee............
-    .........ccc............
-    ........cc1cc...........
-    .........c1c............
-    .........c1c............
-    .........c1c............
-    .........c1c............
-    `, SpriteKind.Player)
-controller.moveSprite(mySprite)
-scene.cameraFollowSprite(mySprite)
 scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.BothDirections)
+water()
+farm()
+money()
+medications()
+Initial_amounts()
+call_main_character()
+item_spawn()
+game.onUpdateInterval(20000, function () {
+    disasters = [0, 1]
+})
